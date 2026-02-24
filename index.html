@@ -5,20 +5,258 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youssef Hazem | Machine Learning Engineer</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* [Previous CSS remains the same] */
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #06b6d4;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
         
-        /* Lightbox Styles */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        /* Custom Cursor */
+        .cursor-dot,
+        .cursor-outline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .cursor-dot {
+            width: 5px;
+            height: 5px;
+            background-color: var(--accent);
+        }
+        
+        .cursor-outline {
+            width: 30px;
+            height: 30px;
+            border: 2px solid rgba(6, 182, 212, 0.5);
+            transition: width 0.2s, height 0.2s, background-color 0.2s;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .gradient-text-cyan {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Glassmorphism */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.5);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+        
+        /* Typing Effect */
+        .typing-container {
+            border-right: 3px solid var(--accent);
+            animation: blink 0.75s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent); }
+        }
+        
+        /* Skill Bar Animation */
+        .skill-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            width: 0;
+            transition: width 1.5s ease-out;
+        }
+        
+        /* Project Image Hover */
+        .project-image-container {
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .project-image-container img {
+            transition: transform 0.5s ease;
+        }
+        
+        .project-image-container:hover img {
+            transform: scale(1.1);
+        }
+        
+        .project-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(15, 23, 42, 0.95), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 1.5rem;
+        }
+        
+        .project-image-container:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        /* Clickable Image Cursor */
+        .clickable-image {
+            cursor: zoom-in;
+        }
+        
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Grid Background */
+        .grid-bg {
+            background-image: 
+                linear-gradient(rgba(99, 102, 241, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(99, 102, 241, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary);
+        }
+        
+        /* Button Glow */
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-glow::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-glow:hover::before {
+            left: 100%;
+        }
+        
+        /* Service Card Icon */
+        .service-icon {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Navigation Active State */
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+        
+        /* Mobile Menu */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        /* Lightbox Styles - NEW */
         .lightbox {
             display: none;
             position: fixed;
-            z-index: 9999;
+            z-index: 10000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
+            background-color: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(10px);
             animation: fadeIn 0.3s ease;
         }
         
@@ -35,9 +273,12 @@
         
         .lightbox-content {
             max-width: 90%;
-            max-height: 90%;
+            max-height: 85%;
+            object-fit: contain;
             animation: zoomIn 0.3s ease;
             cursor: zoom-out;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
         
         @keyframes zoomIn {
@@ -54,24 +295,31 @@
             font-weight: bold;
             cursor: pointer;
             transition: 0.3s;
-            z-index: 10000;
+            z-index: 10001;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
         }
         
         .lightbox-close:hover,
         .lightbox-close:focus {
-            color: #bbb;
-            text-decoration: none;
+            color: var(--accent);
+            background: rgba(255,255,255,0.1);
         }
         
         .lightbox-caption {
             position: absolute;
-            bottom: 20px;
+            bottom: 30px;
             left: 0;
             width: 100%;
             text-align: center;
             color: #ccc;
             font-size: 16px;
             padding: 10px;
+            background: rgba(0,0,0,0.5);
         }
         
         .lightbox-nav {
@@ -79,40 +327,55 @@
             top: 50%;
             transform: translateY(-50%);
             color: white;
-            font-size: 30px;
+            font-size: 24px;
             cursor: pointer;
             padding: 16px;
-            background: rgba(255,255,255,0.1);
+            background: rgba(99, 102, 241, 0.3);
             border-radius: 50%;
             transition: 0.3s;
             user-select: none;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
         }
         
         .lightbox-nav:hover {
-            background: rgba(255,255,255,0.3);
+            background: rgba(99, 102, 241, 0.6);
+            transform: translateY(-50%) scale(1.1);
         }
         
         .lightbox-prev { left: 20px; }
         .lightbox-next { right: 20px; }
         
-        /* Clickable image cursor */
-        .clickable-image {
-            cursor: zoom-in;
-        }
-        
-        /* Image counter */
         .lightbox-counter {
             position: absolute;
-            top: 20px;
-            left: 20px;
-            color: #ccc;
+            top: 30px;
+            left: 30px;
+            color: var(--accent);
             font-size: 14px;
+            font-weight: 600;
+            background: rgba(99, 102, 241, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+        }
+
+        /* Print Styles */
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; color: black; }
+            .glass-card { background: white; border: 1px solid #ccc; break-inside: avoid; }
+            .gradient-text { color: #333; -webkit-text-fill-color: #333; }
+            .lightbox { display: none !important; }
         }
     </style>
 </head>
 <body class="antialiased">
-    <!-- Lightbox Modal -->
-    <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
+    <!-- Lightbox Modal - NEW -->
+    <div id="lightbox" class="lightbox no-print" onclick="closeLightbox(event)">
         <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
         <span class="lightbox-counter" id="lightbox-counter">1 / 4</span>
         <span class="lightbox-nav lightbox-prev" onclick="changeImage(-1, event)">&#10094;</span>
@@ -126,7 +389,462 @@
         <i class="fas fa-download mr-2"></i> Download
     </button>
 
-    <!-- [Previous Navigation and Sections remain the same until Projects] -->
+    <!-- Custom Cursor -->
+    <div class="cursor-dot hidden md:block"></div>
+    <div class="cursor-outline hidden md:block"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="font-display text-2xl font-bold gradient-text">YH</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">Home</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">About</a>
+                        <a href="#education" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">Education</a>
+                        <a href="#skills" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">Skills</a>
+                        <a href="#services" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">Services</a>
+                        <a href="#projects" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium transition">Projects</a>
+                        <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-full text-sm font-medium transition btn-glow">Contact Me</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-slate-900 border-l border-white/10 md:hidden">
+            <div class="p-6">
+                <button id="close-menu" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+                <div class="mt-8 space-y-4">
+                    <a href="#home" class="block text-gray-300 hover:text-white py-2 text-lg">Home</a>
+                    <a href="#about" class="block text-gray-300 hover:text-white py-2 text-lg">About</a>
+                    <a href="#education" class="block text-gray-300 hover:text-white py-2 text-lg">Education</a>
+                    <a href="#skills" class="block text-gray-300 hover:text-white py-2 text-lg">Skills</a>
+                    <a href="#services" class="block text-gray-300 hover:text-white py-2 text-lg">Services</a>
+                    <a href="#projects" class="block text-gray-300 hover:text-white py-2 text-lg">Projects</a>
+                    <a href="#contact" class="block text-indigo-400 hover:text-indigo-300 py-2 text-lg">Contact Me</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center justify-center grid-bg pt-16 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden">
+            <div class="absolute -top-40 -right-40 w-80 h-80 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+            <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-cyan-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse" style="animation-delay: 2s;"></div>
+        </div>
+
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="space-y-8">
+                <!-- Name -->
+                <div class="reveal-text">
+                    <h1 class="font-display text-5xl md:text-7xl lg:text-8xl font-bold mb-4">
+                        <span class="block text-white">Youssef</span>
+                        <span class="block gradient-text mt-2">Hazem Hanafi</span>
+                    </h1>
+                </div>
+
+                <!-- Title -->
+                <div class="reveal-text">
+                    <p class="text-xl md:text-2xl text-cyan-400 font-medium tracking-wide uppercase">
+                        Machine Learning Engineer
+                    </p>
+                </div>
+
+                <!-- Slogan with Typing Effect -->
+                <div class="reveal-text max-w-3xl mx-auto">
+                    <p class="text-lg md:text-xl text-gray-400 leading-relaxed typing-container inline-block">
+                        Transforming Data into Intelligence, Code into Impact
+                    </p>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="reveal-text flex flex-col sm:flex-row gap-4 justify-center mt-12">
+                    <a href="#projects" class="group relative px-8 py-4 bg-indigo-600 rounded-full font-semibold text-white overflow-hidden btn-glow hover:scale-105 transition-transform">
+                        <span class="relative z-10">View My Work</span>
+                        <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                    </a>
+                    <a href="#contact" class="px-8 py-4 border border-white/20 rounded-full font-semibold text-white hover:bg-white/10 transition-all hover:scale-105">
+                        Get In Touch
+                    </a>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+                    <a href="#about" class="text-gray-400 hover:text-white transition">
+                        <i class="fas fa-chevron-down text-2xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <!-- Left Content -->
+                <div class="space-y-6 reveal-left">
+                    <div class="inline-block px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium">
+                        About Me
+                    </div>
+                    <h2 class="font-display text-4xl md:text-5xl font-bold text-white">
+                        Engineering the Future with <span class="gradient-text-cyan">AI & Intelligence</span>
+                    </h2>
+                    <p class="text-gray-400 text-lg leading-relaxed">
+                        AI-driven engineer specializing in building intelligent, data-driven systems that transform complex challenges into scalable and high-impact solutions through advanced analytical thinking and machine learning technologies.
+                    </p>
+                    
+                    <!-- Key Strengths -->
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-cyan-400 text-xs"></i>
+                            </div>
+                            <p class="text-gray-300">Creating classification and prediction models that drive business decisions</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-cyan-400 text-xs"></i>
+                            </div>
+                            <p class="text-gray-300">Bridging hardware and software with embedded systems expertise</p>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 rounded-full bg-cyan-500/20 flex items-center justify-center flex-shrink-0 mt-1">
+                                <i class="fas fa-check text-cyan-400 text-xs"></i>
+                            </div>
+                            <p class="text-gray-300">Strong foundation in network security and IoT development</p>
+                        </div>
+                    </div>
+
+                    <!-- Stats -->
+                    <div class="grid grid-cols-3 gap-6 pt-8 border-t border-white/10">
+                        <div>
+                            <div class="text-3xl font-bold text-white">7+</div>
+                            <div class="text-sm text-gray-400">Projects Completed</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white">3.78</div>
+                            <div class="text-sm text-gray-400">GPA Score</div>
+                        </div>
+                        <div>
+                            <div class="text-3xl font-bold text-white">5+</div>
+                            <div class="text-sm text-gray-400">Certifications</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Visual -->
+                <div class="relative reveal-right">
+                    <div class="relative w-full aspect-square max-w-md mx-auto">
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 to-cyan-600 rounded-3xl rotate-6 opacity-50"></div>
+                        <div class="absolute inset-0 bg-slate-800 rounded-3xl border border-white/10 flex items-center justify-center overflow-hidden">
+                            <div class="text-center p-8">
+                                <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-indigo-500 to-cyan-500 flex items-center justify-center float">
+                                    <i class="fas fa-brain text-5xl text-white"></i>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="h-2 bg-white/10 rounded-full w-3/4 mx-auto"></div>
+                                    <div class="h-2 bg-white/10 rounded-full w-1/2 mx-auto"></div>
+                                    <div class="h-2 bg-white/10 rounded-full w-2/3 mx-auto"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="py-24 bg-slate-900/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <div class="inline-block px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm font-medium mb-4">
+                    Academic Background
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Education & <span class="gradient-text">Certifications</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- University -->
+                <div class="glass-card rounded-2xl p-8 reveal-up">
+                    <div class="flex items-start justify-between mb-6">
+                        <div class="w-14 h-14 rounded-xl bg-indigo-600/20 flex items-center justify-center">
+                            <i class="fas fa-university text-2xl text-indigo-400"></i>
+                        </div>
+                        <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-sm font-medium">Current</span>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-2">Computer Systems Engineering</h3>
+                    <p class="text-indigo-400 font-medium mb-2">MSA University</p>
+                    <p class="text-gray-400 mb-4">Undergraduate Degree</p>
+                    <div class="flex items-center space-x-2 text-sm text-gray-300">
+                        <i class="fas fa-star text-yellow-500"></i>
+                        <span>GPA: 3.78/4.0</span>
+                    </div>
+                </div>
+
+                <!-- Certifications List -->
+                <div class="space-y-4 reveal-up">
+                    <div class="glass-card rounded-xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-12 h-12 rounded-lg bg-blue-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-certificate text-blue-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-white font-semibold">DEPI Microsoft Machine Learning Engineer</h4>
+                            <p class="text-gray-400 text-sm">In Progress</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-12 h-12 rounded-lg bg-yellow-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-code text-yellow-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-white font-semibold">MCIT Intermediate Python Programming</h4>
+                            <p class="text-gray-400 text-sm">October 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-12 h-12 rounded-lg bg-green-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-robot text-green-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-white font-semibold">Huawei HCIA-AI</h4>
+                            <p class="text-gray-400 text-sm">February 2025</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-12 h-12 rounded-lg bg-red-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-shield-alt text-red-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-white font-semibold">Huawei HCIA-Security</h4>
+                            <p class="text-gray-400 text-sm">September 2024</p>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-12 h-12 rounded-lg bg-purple-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-microchip text-purple-400"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h4 class="text-white font-semibold">ITI Internet of Things Applications</h4>
+                            <p class="text-gray-400 text-sm">July 2024</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <div class="inline-block px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-400 text-sm font-medium mb-4">
+                    Technical Arsenal
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Skills & <span class="gradient-text-cyan">Technologies</span></h2>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Technical Skills -->
+                <div class="glass-card rounded-2xl p-8 reveal-up">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-600/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-laptop-code text-2xl text-indigo-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-6">Technical Skills</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">Machine Learning</span>
+                                <span class="text-indigo-400 text-sm">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">Python Programming</span>
+                                <span class="text-indigo-400 text-sm">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">C++ / OOP</span>
+                                <span class="text-indigo-400 text-sm">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="80"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">Data Structures</span>
+                                <span class="text-indigo-400 text-sm">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="85"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">IoT Development</span>
+                                <span class="text-indigo-400 text-sm">75%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="75"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-1">
+                                <span class="text-gray-300 text-sm">Network Security</span>
+                                <span class="text-indigo-400 text-sm">70%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-width="70"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div class="glass-card rounded-2xl p-8 reveal-up" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 rounded-xl bg-cyan-600/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-tools text-2xl text-cyan-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-6">Tools & Platforms</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fab fa-microsoft text-blue-400"></i>
+                            <span class="text-gray-300 text-sm">MS Office</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fas fa-network-wired text-green-400"></i>
+                            <span class="text-gray-300 text-sm">Cisco Packet Tracer</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fas fa-code text-purple-400"></i>
+                            <span class="text-gray-300 text-sm">Visual Studio</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fas fa-microchip text-yellow-400"></i>
+                            <span class="text-gray-300 text-sm">Proteus</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fab fa-github text-white"></i>
+                            <span class="text-gray-300 text-sm">GitHub</span>
+                        </div>
+                        <div class="flex items-center space-x-2 p-3 rounded-lg bg-white/5 hover:bg-white/10 transition">
+                            <i class="fas fa-brain text-pink-400"></i>
+                            <span class="text-gray-300 text-sm">Scikit-learn</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Languages -->
+                <div class="glass-card rounded-2xl p-8 reveal-up" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 rounded-xl bg-purple-600/20 flex items-center justify-center mb-6">
+                        <i class="fas fa-language text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-6">Languages</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🇪🇬</span>
+                                <div>
+                                    <div class="text-white font-medium">Arabic</div>
+                                    <div class="text-gray-400 text-sm">Native</div>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-full border-4 border-purple-500 flex items-center justify-center">
+                                <span class="text-xs font-bold text-purple-400">100%</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/10">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">🇬🇧</span>
+                                <div>
+                                    <div class="text-white font-medium">English</div>
+                                    <div class="text-gray-400 text-sm">Fluent</div>
+                                </div>
+                            </div>
+                            <div class="w-12 h-12 rounded-full border-4 border-cyan-500 flex items-center justify-center">
+                                <span class="text-xs font-bold text-cyan-400">90%</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Soft Skills -->
+                    <div class="mt-8 pt-6 border-t border-white/10">
+                        <h4 class="text-white font-semibold mb-4">Soft Skills</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full bg-white/10 text-gray-300 text-sm">Communication</span>
+                            <span class="px-3 py-1 rounded-full bg-white/10 text-gray-300 text-sm">Time Management</span>
+                            <span class="px-3 py-1 rounded-full bg-white/10 text-gray-300 text-sm">Analytical Thinking</span>
+                            <span class="px-3 py-1 rounded-full bg-white/10 text-gray-300 text-sm">Problem Solving</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 bg-slate-900/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal-up">
+                <div class="inline-block px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm font-medium mb-4">
+                    What I Offer
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Offered <span class="gradient-text">Services</span></h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Leveraging cutting-edge technologies to deliver intelligent solutions tailored to your needs</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Service 1 -->
+                <div class="glass-card rounded-2xl p-8 text-center group hover:scale-105 transition-transform duration-300 reveal-up">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                        <i class="fas fa-brain text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Machine Learning Model Development</h3>
+                    <p class="text-gray-400">Building classification and prediction models using neural networks and statistical analysis to extract actionable insights from complex datasets</p>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card rounded-2xl p-8 text-center group hover:scale-105 transition-transform duration-300 reveal-up" style="transition-delay: 100ms;">
+                    <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-cyan-600 to-blue-600 flex items-center justify-center group-hover:rotate-6 transition-transform">
+                        <i class="fas fa-microchip text-3xl text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Embedded Systems Programming</h3>
+                    <p class="text-gray-400">Designing and implementing firmware solutions for microcontrollers (ATmega32, 8086) with hardware-software integration expertise</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Projects Section -->
     <section id="projects" class="py-24 relative">
@@ -139,7 +857,128 @@
                 <p class="text-gray-400 mt-4">Click on images to view in full size</p>
             </div>
 
-            <!-- Project 4: Stopwatch (With Clickable Images) -->
+            <!-- Project 1: MLP -->
+            <div class="glass-card rounded-3xl overflow-hidden mb-12 reveal-up">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-8 md:p-12 flex flex-col justify-center">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium">Machine Learning</span>
+                            <span class="px-3 py-1 rounded-full bg-green-500/10 text-green-400 text-xs font-medium">Python</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Customer Retention Prediction Model</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Developed a Multi-Layer Perceptron (MLP) neural network to predict customer return behavior using the Online Retail II dataset. Engineered RFM-based features to capture purchasing patterns and implemented comprehensive data preprocessing including class imbalance handling.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span><strong>Challenge:</strong> Handling imbalanced customer behavior data</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span><strong>Result:</strong> F1-Score 0.87 (return), 0.71 (no-return)</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                                <span><strong>Tools:</strong> Python, Scikit-learn, Pandas, Neural Networks</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/youssefhazem3-dot/MLP-prediction-model" target="_blank" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition no-print">
+                            View on GitHub <i class="fab fa-github ml-2 text-xl"></i>
+                        </a>
+                    </div>
+                    <div class="bg-gradient-to-br from-blue-900/20 to-purple-900/20 p-8 flex items-center justify-center relative overflow-hidden">
+                        <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%236366f1\' fill-opacity=\'0.1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+                        <div class="text-center">
+                            <i class="fas fa-project-diagram text-8xl text-indigo-500/30 mb-4"></i>
+                            <div class="grid grid-cols-2 gap-4 text-center">
+                                <div class="bg-white/5 rounded-lg p-4">
+                                    <div class="text-2xl font-bold text-indigo-400">0.87</div>
+                                    <div class="text-xs text-gray-400">F1 Return</div>
+                                </div>
+                                <div class="bg-white/5 rounded-lg p-4">
+                                    <div class="text-2xl font-bold text-purple-400">0.71</div>
+                                    <div class="text-xs text-gray-400">F1 No-Return</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Banking System -->
+            <div class="glass-card rounded-3xl overflow-hidden mb-12 reveal-up">
+                <div class="grid md:grid-cols-2">
+                    <div class="order-2 md:order-1 bg-gradient-to-br from-emerald-900/20 to-teal-900/20 p-8 flex items-center justify-center">
+                        <i class="fas fa-university text-8xl text-emerald-500/30"></i>
+                    </div>
+                    <div class="order-1 md:order-2 p-8 md:p-12 flex flex-col justify-center">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium">C++</span>
+                            <span class="px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-xs font-medium">OOP</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Banking Management System</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            A comprehensive console-based banking system built with Object-Oriented Programming principles. Features robust account management, secure transaction processing, and data persistence using advanced data structures.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-emerald-400 mr-2"></i>
+                                <span><strong>Role:</strong> Full System Architecture & Development</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-emerald-400 mr-2"></i>
+                                <span><strong>Challenge:</strong> Implementing secure transaction logic</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-emerald-400 mr-2"></i>
+                                <span><strong>Tools:</strong> C++, Data Structures, File I/O</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/youssefhazem3-dot/Banking-System" target="_blank" class="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-medium transition no-print">
+                            View on GitHub <i class="fab fa-github ml-2 text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 3: Hotel Booking -->
+            <div class="glass-card rounded-3xl overflow-hidden mb-12 reveal-up">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-8 md:p-12 flex flex-col justify-center">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-orange-500/10 text-orange-400 text-xs font-medium">C++</span>
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-medium">System Design</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Hotel Booking System</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Multi-user hotel reservation platform with real-time availability tracking, structured data management, and intuitive booking logic. Designed to handle concurrent reservations and room management efficiently.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                <span><strong>Challenge:</strong> Real-time availability synchronization</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                <span><strong>Result:</strong> Efficient multi-user concurrent access</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-orange-400 mr-2"></i>
+                                <span><strong>Tools:</strong> C++, Structured Programming</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/youssefhazem3-dot/Hotel-booking-system" target="_blank" class="inline-flex items-center text-orange-400 hover:text-orange-300 font-medium transition no-print">
+                            View on GitHub <i class="fab fa-github ml-2 text-xl"></i>
+                        </a>
+                    </div>
+                    <div class="bg-gradient-to-br from-orange-900/20 to-red-900/20 p-8 flex items-center justify-center">
+                        <i class="fas fa-hotel text-8xl text-orange-500/30"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 4: Stopwatch (With CLICKABLE Images) -->
             <div class="glass-card rounded-3xl overflow-hidden mb-12 reveal-up">
                 <div class="p-8 md:p-12">
                     <div class="flex flex-wrap items-center gap-2 mb-6">
@@ -152,24 +991,24 @@
                         Designed and simulated a fully functional embedded stopwatch system using ATmega32 microcontroller. Integrated LCD display interface with precise timing controls including Start/Resume, Pause, and Reset functionality.
                     </p>
                     
-                    <!-- Clickable Image Gallery -->
+                    <!-- CLICKABLE Image Gallery -->
                     <div class="grid md:grid-cols-3 gap-4 mb-8">
                         <div class="project-image-container rounded-xl bg-slate-800 aspect-video clickable-image" onclick="openLightbox(0)">
                             <img src="PASTE_STOPWATCH_START_BASE64_HERE" alt="Stopwatch Initial State" class="w-full h-full object-cover">
                             <div class="project-overlay">
-                                <span class="text-white text-sm font-medium">Click to enlarge</span>
+                                <span class="text-white text-sm font-medium"><i class="fas fa-search-plus mr-2"></i>Click to enlarge</span>
                             </div>
                         </div>
                         <div class="project-image-container rounded-xl bg-slate-800 aspect-video clickable-image" onclick="openLightbox(1)">
                             <img src="PASTE_STOPWATCH_RUNNING_BASE64_HERE" alt="Stopwatch Running" class="w-full h-full object-cover">
                             <div class="project-overlay">
-                                <span class="text-white text-sm font-medium">Click to enlarge</span>
+                                <span class="text-white text-sm font-medium"><i class="fas fa-search-plus mr-2"></i>Click to enlarge</span>
                             </div>
                         </div>
                         <div class="project-image-container rounded-xl bg-slate-800 aspect-video clickable-image" onclick="openLightbox(2)">
                             <img src="PASTE_STOPWATCH_PAUSED_BASE64_HERE" alt="Stopwatch Paused" class="w-full h-full object-cover">
                             <div class="project-overlay">
-                                <span class="text-white text-sm font-medium">Click to enlarge</span>
+                                <span class="text-white text-sm font-medium"><i class="fas fa-search-plus mr-2"></i>Click to enlarge</span>
                             </div>
                         </div>
                     </div>
@@ -183,14 +1022,14 @@
                 </div>
             </div>
 
-            <!-- Project 5: Audio Amplifier (Clickable Image) -->
+            <!-- Project 5: Audio Amplifier (CLICKABLE Image) -->
             <div class="glass-card rounded-3xl overflow-hidden mb-12 reveal-up">
                 <div class="grid md:grid-cols-2">
                     <div class="order-2 md:order-1 bg-gradient-to-br from-rose-900/20 to-pink-900/20 p-4 flex items-center justify-center">
                         <div class="project-image-container rounded-lg w-full max-w-md clickable-image" onclick="openLightbox(3)">
                             <img src="PASTE_AMPLIFIER_BASE64_HERE" alt="Audio Amplifier Circuit" class="w-full h-auto rounded-lg">
                             <div class="project-overlay rounded-lg">
-                                <span class="text-white text-sm font-medium">Click to enlarge</span>
+                                <span class="text-white text-sm font-medium"><i class="fas fa-search-plus mr-2"></i>Click to enlarge</span>
                             </div>
                         </div>
                     </div>
@@ -221,14 +1060,161 @@
                 </div>
             </div>
 
-            <!-- [Rest of the projects remain the same] -->
+            <!-- Project 6: Dice Roller -->
+            <div class="glass-card rounded-3xl overflow-hidden reveal-up">
+                <div class="grid md:grid-cols-2">
+                    <div class="p-8 md:p-12 flex flex-col justify-center">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="px-3 py-1 rounded-full bg-indigo-500/10 text-indigo-400 text-xs font-medium">Assembly</span>
+                            <span class="px-3 py-1 rounded-full bg-gray-500/10 text-gray-400 text-xs font-medium">8086</span>
+                        </div>
+                        <h3 class="text-3xl font-bold text-white mb-4">Dice Roller - 8086 Microprocessor</h3>
+                        <p class="text-gray-400 mb-6 leading-relaxed">
+                            Developed a dice simulation program using 8086 assembly language concepts. Implemented random number generation logic, seven-segment display output control, and user input handling mechanisms.
+                        </p>
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-indigo-400 mr-2"></i>
+                                <span><strong>Logic:</strong> Random number generation (1-6)</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-indigo-400 mr-2"></i>
+                                <span><strong>Interface:</strong> Seven-segment display output</span>
+                            </div>
+                            <div class="flex items-center text-sm text-gray-300">
+                                <i class="fas fa-check-circle text-indigo-400 mr-2"></i>
+                                <span><strong>Tools:</strong> 8086 Assembly, Emulator</span>
+                            </div>
+                        </div>
+                        <a href="https://github.com/youssefhazem3-dot/Dice-Roller-8086-microprocessor" target="_blank" class="inline-flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition no-print">
+                            View on GitHub <i class="fab fa-github ml-2 text-xl"></i>
+                        </a>
+                    </div>
+                    <div class="bg-gradient-to-br from-indigo-900/20 to-purple-900/20 p-8 flex items-center justify-center">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="w-20 h-20 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <span class="text-4xl font-bold text-indigo-400">1</span>
+                            </div>
+                            <div class="w-20 h-20 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <span class="text-4xl font-bold text-purple-400">2</span>
+                            </div>
+                            <div class="w-20 h-20 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <span class="text-4xl font-bold text-cyan-400">3</span>
+                            </div>
+                            <div class="w-20 h-20 rounded-xl bg-white/5 flex items-center justify-center border border-white/10">
+                                <span class="text-4xl font-bold text-pink-400">4</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- [Contact and Footer remain the same] -->
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-indigo-900/20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16 reveal-up">
+                <div class="inline-block px-4 py-2 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-sm font-medium mb-4">
+                    Get In Touch
+                </div>
+                <h2 class="font-display text-4xl md:text-5xl font-bold text-white">Let's Work <span class="gradient-text">Together</span></h2>
+                <p class="text-gray-400 mt-4 max-w-2xl mx-auto">Ready to bring your ideas to life? I'm currently available for freelance projects and collaborations.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 max-w-5xl mx-auto">
+                <!-- Contact Info -->
+                <div class="space-y-8 reveal-left">
+                    <div class="glass-card rounded-2xl p-6 flex items-center space-x-4 hover:border-cyan-500/30 transition">
+                        <div class="w-14 h-14 rounded-xl bg-cyan-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-envelope text-2xl text-cyan-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Email</h4>
+                            <a href="mailto:yousef2004hazem@gmail.com" class="text-gray-400 hover:text-cyan-400 transition">yousef2004hazem@gmail.com</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 flex items-center space-x-4 hover:border-green-500/30 transition">
+                        <div class="w-14 h-14 rounded-xl bg-green-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-phone text-2xl text-green-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Phone</h4>
+                            <a href="tel:+201095323371" class="text-gray-400 hover:text-green-400 transition">+20 109 532 3371</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 flex items-center space-x-4 hover:border-blue-500/30 transition">
+                        <div class="w-14 h-14 rounded-xl bg-blue-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-linkedin text-2xl text-blue-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">LinkedIn</h4>
+                            <a href="https://linkedin.com/in/youssef-hazem-hanafi" target="_blank" class="text-gray-400 hover:text-blue-400 transition">youssef-hazem-hanafi</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 flex items-center space-x-4 hover:border-purple-500/30 transition">
+                        <div class="w-14 h-14 rounded-xl bg-purple-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fab fa-github text-2xl text-purple-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">GitHub</h4>
+                            <a href="https://github.com/youssefhazem3-dot" target="_blank" class="text-gray-400 hover:text-purple-400 transition">youssefhazem3-dot</a>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-2xl p-6 flex items-center space-x-4 hover:border-orange-500/30 transition">
+                        <div class="w-14 h-14 rounded-xl bg-orange-600/20 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-2xl text-orange-400"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-white font-semibold mb-1">Location</h4>
+                            <p class="text-gray-400">6th of October City, Giza Governorate, Egypt</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA Box -->
+                <div class="glass-card rounded-3xl p-8 md:p-12 flex flex-col justify-center items-center text-center reveal-right border-gradient">
+                    <div class="w-24 h-24 rounded-full bg-gradient-to-br from-indigo-600 to-cyan-600 flex items-center justify-center mb-6 float">
+                        <i class="fas fa-rocket text-4xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Start a Project</h3>
+                    <p class="text-gray-400 mb-8">Have an idea in mind? Let's discuss how we can turn your vision into reality with cutting-edge technology solutions.</p>
+                    <a href="mailto:yousef2004hazem@gmail.com" class="w-full py-4 bg-gradient-to-r from-indigo-600 to-cyan-600 rounded-full font-semibold text-white hover:shadow-lg hover:shadow-indigo-500/25 transition btn-glow">
+                        Send Message <i class="fas fa-paper-plane ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/10 py-8 bg-slate-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <span class="font-display text-xl font-bold gradient-text">YH</span>
+                <span class="text-gray-400 ml-2">© 2025 Youssef Hazem. All rights reserved.</span>
+            </div>
+            <div class="flex space-x-6">
+                <a href="https://github.com/youssefhazem3-dot" target="_blank" class="text-gray-400 hover:text-white transition text-xl">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="https://linkedin.com/in/youssef-hazem-hanafi" target="_blank" class="text-gray-400 hover:text-white transition text-xl">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="mailto:yousef2004hazem@gmail.com" class="text-gray-400 hover:text-white transition text-xl">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // Lightbox functionality
+        // Lightbox functionality - NEW
         let currentImageIndex = 0;
         const images = [
             { src: 'data:image/png;base64,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', caption: 'Stopwatch - Initial State (Press to Start)' },
@@ -248,15 +1234,15 @@
             caption.textContent = images[index].caption;
             counter.textContent = `${index + 1} / ${images.length}`;
             lightbox.classList.add('active');
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
+            document.body.style.overflow = 'hidden';
         }
 
         function closeLightbox(event) {
-            if (event && event.target !== event.currentTarget && event.target.className !== 'lightbox-close') return;
+            if (event && event.target !== event.currentTarget && !event.target.classList.contains('lightbox-close')) return;
             
             const lightbox = document.getElementById('lightbox');
             lightbox.classList.remove('active');
-            document.body.style.overflow = 'auto'; // Restore scrolling
+            document.body.style.overflow = 'auto';
         }
 
         function changeImage(direction, event) {
@@ -270,7 +1256,6 @@
             const caption = document.getElementById('lightbox-caption');
             const counter = document.getElementById('lightbox-counter');
             
-            // Fade effect
             img.style.opacity = '0';
             setTimeout(() => {
                 img.src = images[currentImageIndex].src;
@@ -280,7 +1265,7 @@
             }, 200);
         }
 
-        // Keyboard navigation
+        // Keyboard navigation for lightbox
         document.addEventListener('keydown', function(e) {
             const lightbox = document.getElementById('lightbox');
             if (!lightbox.classList.contains('active')) return;
@@ -290,8 +1275,49 @@
             if (e.key === 'ArrowRight') changeImage(1, { stopPropagation: () => {} });
         });
 
-        // [Previous JavaScript for mobile menu, skill bars, etc. remains the same]
-        
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Custom Cursor
+        const cursorDot = document.querySelector('.cursor-dot');
+        const cursorOutline = document.querySelector('.cursor-outline');
+
+        window.addEventListener('mousemove', (e) => {
+            const posX = e.clientX;
+            const posY = e.clientY;
+
+            if (cursorDot) {
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+            }
+
+            if (cursorOutline) {
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            }
+        });
+
+        // Hover effect for cursor
+        const interactiveElements = document.querySelectorAll('a, button, .glass-card, .clickable-image');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                if (cursorOutline) {
+                    cursorOutline.style.width = '50px';
+                    cursorOutline.style.height = '50px';
+                    cursorOutline.style.backgroundColor = 'rgba(6, 182, 212, 0.1)';
+                }
+            });
+            el.addEventListener('mouseleave', () => {
+                if (cursorOutline) {
+                    cursorOutline.style.width = '30px';
+                    cursorOutline.style.height = '30px';
+                    cursorOutline.style.backgroundColor = 'transparent';
+                }
+            });
+        });
+
         // Mobile Menu
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         const closeMenuBtn = document.getElementById('close-menu');
@@ -309,7 +1335,64 @@
             });
         }
 
-        // Smooth Scroll
+        if (mobileMenu) {
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.remove('open');
+                });
+            });
+        }
+
+        // GSAP Animations
+        gsap.from(".reveal-text", {
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out"
+        });
+
+        // Scroll Reveals
+        const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
+        
+        revealElements.forEach(element => {
+            gsap.fromTo(element, 
+                {
+                    y: element.classList.contains('reveal-up') ? 50 : 0,
+                    x: element.classList.contains('reveal-left') ? -50 : element.classList.contains('reveal-right') ? 50 : 0,
+                    opacity: 0
+                },
+                {
+                    y: 0,
+                    x: 0,
+                    opacity: 1,
+                    duration: 1,
+                    ease: "power3.out",
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                }
+            );
+        });
+
+        // Skill Bars Animation
+        const skillBars = document.querySelectorAll('.skill-progress');
+        skillBars.forEach(bar => {
+            const width = bar.getAttribute('data-width');
+            gsap.to(bar, {
+                width: width + '%',
+                duration: 1.5,
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: bar,
+                    start: "top 90%"
+                }
+            });
+        });
+
+        // Smooth Scroll for Navigation Links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -323,19 +1406,35 @@
             });
         });
 
-        // Reveal animations on scroll
-        const revealElements = document.querySelectorAll('.reveal-up, .reveal-left, .reveal-right');
-        
-        const revealObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('revealed');
+        // Active Navigation Link
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
                 }
             });
-        }, { threshold: 0.1 });
 
-        revealElements.forEach(el => {
-            revealObserver.observe(el);
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax Effect for Hero
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('#home');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
         });
     </script>
 </body>
