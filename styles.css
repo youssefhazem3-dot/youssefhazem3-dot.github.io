@@ -496,6 +496,14 @@ h3 {
     grid-template-columns: 1.08fr 0.92fr;
 }
 
+.project-card.featured.reverse .project-visual {
+    order: 2;
+}
+
+.project-card.featured.reverse .project-body {
+    order: 1;
+}
+
 .project-visual,
 .image-strip button {
     position: relative;
@@ -521,7 +529,7 @@ h3 {
     transition: transform 220ms ease, filter 220ms ease;
 }
 
-.project-visual span {
+.project-visual > span {
     position: absolute;
     right: 14px;
     bottom: 14px;
@@ -538,6 +546,148 @@ h3 {
 .image-strip button:hover img {
     transform: scale(1.035);
     filter: contrast(1.08);
+}
+
+.project-visual.synthetic {
+    min-height: 280px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 24px;
+    cursor: default;
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        #091017;
+    background-size: 28px 28px;
+}
+
+.project-visual.synthetic::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(52, 245, 212, 0.18), transparent 42%),
+        linear-gradient(315deg, rgba(255, 91, 200, 0.12), transparent 38%);
+    pointer-events: none;
+}
+
+.visual-topline,
+.poster-row,
+.score-line,
+.candidate-stack,
+.ticket-board {
+    position: relative;
+}
+
+.visual-topline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--cyan);
+    font-size: 0.78rem;
+    font-weight: 900;
+    letter-spacing: 0.14em;
+}
+
+.visual-topline i {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 6px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+    font-size: 1.05rem;
+}
+
+.poster-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.poster-row span {
+    min-height: 122px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    background:
+        linear-gradient(160deg, rgba(52, 245, 212, 0.18), rgba(255, 189, 107, 0.12)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+}
+
+.poster-row span:nth-child(2) {
+    transform: translateY(-12px);
+    background:
+        linear-gradient(160deg, rgba(255, 91, 200, 0.20), rgba(52, 245, 212, 0.12)),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+}
+
+.score-line {
+    display: flex;
+    align-items: end;
+    gap: 10px;
+    margin-top: 22px;
+}
+
+.score-line strong {
+    color: var(--green);
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 2.3rem;
+    line-height: 1;
+}
+
+.score-line span {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.candidate-stack,
+.ticket-board {
+    display: grid;
+    gap: 10px;
+    margin-top: 28px;
+}
+
+.candidate-stack span,
+.ticket-board span {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.candidate-stack span::before,
+.ticket-board span::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 18px rgba(52, 245, 212, 0.58);
+}
+
+.ticket-board {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.movie-visual {
+    border-color: rgba(255, 91, 200, 0.18);
+}
+
+.hire-visual {
+    border-color: rgba(141, 255, 122, 0.18);
+}
+
+.support-visual {
+    border-color: rgba(255, 189, 107, 0.18);
 }
 
 .project-body {
@@ -559,6 +709,17 @@ h3 {
 
 .text-link:hover {
     color: var(--green);
+}
+
+.project-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.project-actions .text-link {
+    margin-top: 0;
 }
 
 .project-icon {
