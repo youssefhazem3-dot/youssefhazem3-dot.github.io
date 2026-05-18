@@ -46,6 +46,26 @@ const activeObserver = new IntersectionObserver((entries) => {
 
 sections.forEach((section) => activeObserver.observe(section));
 
+const spotlightTargets = document.querySelectorAll(
+    ".hero-inner, .signal-card, .stack-panel, .timeline-item, .service-card, .project-card, .contact-card",
+);
+
+const supportsFinePointer = window.matchMedia("(pointer: fine)").matches;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (supportsFinePointer && !prefersReducedMotion) {
+    spotlightTargets.forEach((target) => {
+        target.addEventListener("pointermove", (event) => {
+            const rect = target.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            target.style.setProperty("--spotlight-x", `${x}px`);
+            target.style.setProperty("--spotlight-y", `${y}px`);
+        });
+    });
+}
+
 const lightbox = document.querySelector("[data-lightbox-modal]");
 const lightboxImage = document.querySelector("[data-lightbox-image]");
 const lightboxCaption = document.querySelector("[data-lightbox-caption]");
