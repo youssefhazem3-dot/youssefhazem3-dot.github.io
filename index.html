@@ -27,6 +27,7 @@
                 <a href="#profile">Profile</a>
                 <a href="#credentials">Credentials</a>
                 <a href="#stack">Stack</a>
+                <a href="#services">Services</a>
                 <a href="#projects">Projects</a>
                 <a href="#contact">Contact</a>
             </nav>
@@ -40,10 +41,10 @@
                     <div class="hero-content reveal">
                         <p class="eyebrow">Machine Learning Engineer</p>
                         <h1>Youssef Hazem Hanafi</h1>
-                    <p class="hero-copy">
-                        I build practical AI products: predictive models, recommendation systems,
-                        intelligent automation platforms, and data-driven interfaces that turn messy workflows into clear decisions.
-                    </p>
+                        <p class="hero-copy">
+                            I build practical AI products: predictive models, recommendation systems,
+                            intelligent automation platforms, and data-driven interfaces that turn messy workflows into clear decisions.
+                        </p>
                         <div class="hero-actions">
                             <a class="btn primary" href="#projects">
                                 <span>View work</span>
@@ -56,8 +57,8 @@
                         </div>
                         <div class="hero-metrics" aria-label="Portfolio highlights">
                             <div>
-                                <strong>6+</strong>
-                                <span>Projects</span>
+                                <strong>4</strong>
+                                <span>Featured AI Projects</span>
                             </div>
                             <div>
                                 <strong>3.78</strong>
@@ -198,16 +199,51 @@
                 </div>
             </section>
 
+            <section class="section services-section" id="services">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">AI Services</p>
+                    <h2>Focused work for intelligent products.</h2>
+                    <p>Modeling, automation, and interface work shaped around practical deployment and clear decisions.</p>
+                </div>
+
+                <div class="services-grid">
+                    <article class="service-card reveal">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>01</span>
+                        <h3>Predictive ML Systems</h3>
+                        <p>Feature engineering, model training, evaluation, and dashboards that make predictions explainable.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <i class="fa-solid fa-robot"></i>
+                        <span>02</span>
+                        <h3>AI Workflow Automation</h3>
+                        <p>Ticket routing, classification, alerts, and structured pipelines using AI with reliable process logic.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>03</span>
+                        <h3>Recommendation Products</h3>
+                        <p>Hybrid recommenders, NLP matching, feedback loops, and user-facing recommendation experiences.</p>
+                    </article>
+                    <article class="service-card reveal">
+                        <i class="fa-solid fa-layer-group"></i>
+                        <span>04</span>
+                        <h3>AI Product Interfaces</h3>
+                        <p>Clean dashboards, admin views, demo-ready frontends, and Vercel deployments for AI projects.</p>
+                    </article>
+                </div>
+            </section>
+
             <section class="section projects-section" id="projects">
                 <div class="section-heading reveal">
                     <p class="eyebrow">AI Project Lab</p>
-                    <h2>Projects that match the AI engineer direction.</h2>
-                    <p>Focused on prediction, recommendation, intelligent workflows, and production-style AI interfaces.</p>
+                    <h2>Live AI projects with product context.</h2>
+                    <p>Prediction, recommendation, intelligent workflows, and production-style interfaces shown with real project screens.</p>
                 </div>
 
                 <div class="project-grid">
                     <article class="project-card featured reveal">
-                        <button class="project-visual" type="button" data-lightbox="assets/mlp-dashboard.png" data-title="Customer Retention Prediction Model">
+                        <button class="project-visual screenshot" type="button" data-lightbox="assets/mlp-dashboard.png" data-title="Customer Retention Prediction Model">
                             <img src="assets/mlp-dashboard.png" alt="Machine learning dashboard for customer retention prediction" loading="lazy">
                             <span><i class="fa-solid fa-expand"></i></span>
                         </button>
@@ -235,21 +271,10 @@
                     </article>
 
                     <article class="project-card ai-card reveal">
-                        <div class="project-visual synthetic movie-visual" aria-hidden="true">
-                            <div class="visual-topline">
-                                <span>RECOMMENDER</span>
-                                <i class="fa-solid fa-film"></i>
-                            </div>
-                            <div class="poster-row">
-                                <span></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                            <div class="score-line">
-                                <strong>0.92</strong>
-                                <span>match score</span>
-                            </div>
-                        </div>
+                        <button class="project-visual screenshot" type="button" data-lightbox="assets/movie-recommender-screenshot.png" data-title="Movie Recommendation System">
+                            <img src="assets/movie-recommender-screenshot.png" alt="Movie recommendation web app chat interface and recent reviews panel" loading="lazy">
+                            <span><i class="fa-solid fa-expand"></i></span>
+                        </button>
                         <div class="project-body">
                             <div class="project-tags">
                                 <span>Python</span>
@@ -263,6 +288,9 @@
                                 written reviews, and recommendation refinement using machine learning and NLP.
                             </p>
                             <div class="project-actions">
+                                <a class="text-link" href="https://netflixrecommendersite.vercel.app" target="_blank" rel="noreferrer">
+                                    Live demo <i class="fa-solid fa-up-right-from-square"></i>
+                                </a>
                                 <a class="text-link" href="https://github.com/youssefhazem3-dot/Movie-recommendation-model" target="_blank" rel="noreferrer">
                                     GitHub <i class="fa-brands fa-github"></i>
                                 </a>
@@ -271,17 +299,10 @@
                     </article>
 
                     <article class="project-card ai-card reveal">
-                        <div class="project-visual synthetic hire-visual" aria-hidden="true">
-                            <div class="visual-topline">
-                                <span>HIRING AI</span>
-                                <i class="fa-solid fa-user-check"></i>
-                            </div>
-                            <div class="candidate-stack">
-                                <span>CV rank</span>
-                                <span>Interview signal</span>
-                                <span>Fit summary</span>
-                            </div>
-                        </div>
+                        <button class="project-visual screenshot" type="button" data-lightbox="assets/hireflow-screenshot.png" data-title="HireFlow AI Platform">
+                            <img src="assets/hireflow-screenshot.png" alt="HireFlow AI recruitment automation landing and dashboard interface" loading="lazy">
+                            <span><i class="fa-solid fa-expand"></i></span>
+                        </button>
                         <div class="project-body">
                             <div class="project-tags">
                                 <span>TypeScript</span>
@@ -306,18 +327,10 @@
                     </article>
 
                     <article class="project-card featured reverse reveal">
-                        <div class="project-visual synthetic support-visual" aria-hidden="true">
-                            <div class="visual-topline">
-                                <span>SUPPORT AUTOMATION</span>
-                                <i class="fa-solid fa-headset"></i>
-                            </div>
-                            <div class="ticket-board">
-                                <span>Classify intent</span>
-                                <span>Draft response</span>
-                                <span>Escalate priority</span>
-                                <span>Sync database</span>
-                            </div>
-                        </div>
+                        <button class="project-visual screenshot" type="button" data-lightbox="assets/supportflow-screenshot.png" data-title="SupportFlow AI Ticket System">
+                            <img src="assets/supportflow-screenshot.png" alt="SupportFlow AI support ticket automation interface and workflow cards" loading="lazy">
+                            <span><i class="fa-solid fa-expand"></i></span>
+                        </button>
                         <div class="project-body">
                             <div class="project-tags">
                                 <span>OpenAI</span>
@@ -331,6 +344,9 @@
                                 coordinates workflow steps, and stores operational data in PostgreSQL.
                             </p>
                             <div class="project-actions">
+                                <a class="text-link" href="https://supportflow-ai-rose.vercel.app" target="_blank" rel="noreferrer">
+                                    Live demo <i class="fa-solid fa-up-right-from-square"></i>
+                                </a>
                                 <a class="text-link" href="https://github.com/youssefhazem3-dot/supportflow-ai" target="_blank" rel="noreferrer">
                                     GitHub <i class="fa-brands fa-github"></i>
                                 </a>

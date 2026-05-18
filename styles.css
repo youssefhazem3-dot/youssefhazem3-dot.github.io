@@ -53,6 +53,12 @@ a {
     text-decoration: none;
 }
 
+a:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(52, 245, 212, 0.72);
+    outline-offset: 3px;
+}
+
 img {
     display: block;
     max-width: 100%;
@@ -359,6 +365,7 @@ h3 {
 
 .profile-grid,
 .stack-grid,
+.services-grid,
 .contact-grid {
     display: grid;
     gap: 16px;
@@ -371,6 +378,7 @@ h3 {
 .signal-card,
 .stack-panel,
 .timeline-item,
+.service-card,
 .project-card,
 .contact-card {
     border: 1px solid rgba(255, 255, 255, 0.10);
@@ -385,7 +393,7 @@ h3 {
 }
 
 .signal-card i,
-.project-icon i,
+.service-card i,
 .contact-card i {
     color: var(--cyan);
     font-size: 1.6rem;
@@ -393,6 +401,7 @@ h3 {
 
 .signal-card h3,
 .stack-panel h3,
+.service-card h3,
 .timeline-item h3,
 .project-body h3 {
     margin-top: 20px;
@@ -400,6 +409,7 @@ h3 {
 }
 
 .signal-card p,
+.service-card p,
 .timeline-item p,
 .project-body p {
     color: var(--muted);
@@ -459,6 +469,58 @@ h3 {
     padding: 24px;
 }
 
+.services-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-card {
+    position: relative;
+    min-height: 265px;
+    padding: 24px;
+    overflow: hidden;
+    transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.service-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-top: 2px solid rgba(52, 245, 212, 0.42);
+    background:
+        linear-gradient(135deg, rgba(52, 245, 212, 0.10), transparent 44%),
+        linear-gradient(315deg, rgba(255, 189, 107, 0.08), transparent 38%);
+    opacity: 0;
+    transition: opacity 180ms ease;
+    pointer-events: none;
+}
+
+.service-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(52, 245, 212, 0.34);
+    background: linear-gradient(180deg, rgba(23, 34, 43, 0.96), rgba(11, 16, 22, 0.96));
+}
+
+.service-card:hover::before {
+    opacity: 1;
+}
+
+.service-card > * {
+    position: relative;
+}
+
+.service-card span {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    color: rgba(255, 189, 107, 0.88);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 800;
+}
+
+.service-card p {
+    margin-bottom: 0;
+}
+
 .tag-list,
 .project-tags {
     display: flex;
@@ -487,6 +549,12 @@ h3 {
 
 .project-card {
     overflow: hidden;
+    transition: transform 180ms ease, border-color 180ms ease;
+}
+
+.project-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(52, 245, 212, 0.28);
 }
 
 .project-card.featured,
@@ -504,8 +572,7 @@ h3 {
     order: 1;
 }
 
-.project-visual,
-.image-strip button {
+.project-visual {
     position: relative;
     display: block;
     width: 100%;
@@ -526,7 +593,24 @@ h3 {
     height: 100%;
     min-height: 330px;
     object-fit: cover;
+    object-position: top center;
     transition: transform 220ms ease, filter 220ms ease;
+}
+
+.project-visual.screenshot {
+    background:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        var(--surface-2);
+    background-size: 34px 34px;
+}
+
+.project-visual.screenshot::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    pointer-events: none;
 }
 
 .project-visual > span {
@@ -543,151 +627,9 @@ h3 {
 }
 
 .project-visual:hover img,
-.image-strip button:hover img {
+.project-visual:focus-visible img {
     transform: scale(1.035);
     filter: contrast(1.08);
-}
-
-.project-visual.synthetic {
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 24px;
-    cursor: default;
-    background:
-        linear-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        #091017;
-    background-size: 28px 28px;
-}
-
-.project-visual.synthetic::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        linear-gradient(135deg, rgba(52, 245, 212, 0.18), transparent 42%),
-        linear-gradient(315deg, rgba(255, 91, 200, 0.12), transparent 38%);
-    pointer-events: none;
-}
-
-.visual-topline,
-.poster-row,
-.score-line,
-.candidate-stack,
-.ticket-board {
-    position: relative;
-}
-
-.visual-topline {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: var(--cyan);
-    font-size: 0.78rem;
-    font-weight: 900;
-    letter-spacing: 0.14em;
-}
-
-.visual-topline i {
-    display: grid;
-    place-items: center;
-    width: 42px;
-    height: 42px;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 6px;
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.06);
-    font-size: 1.05rem;
-}
-
-.poster-row {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.poster-row span {
-    min-height: 122px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 6px;
-    background:
-        linear-gradient(160deg, rgba(52, 245, 212, 0.18), rgba(255, 189, 107, 0.12)),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
-}
-
-.poster-row span:nth-child(2) {
-    transform: translateY(-12px);
-    background:
-        linear-gradient(160deg, rgba(255, 91, 200, 0.20), rgba(52, 245, 212, 0.12)),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
-}
-
-.score-line {
-    display: flex;
-    align-items: end;
-    gap: 10px;
-    margin-top: 22px;
-}
-
-.score-line strong {
-    color: var(--green);
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 2.3rem;
-    line-height: 1;
-}
-
-.score-line span {
-    color: var(--muted);
-    font-size: 0.9rem;
-}
-
-.candidate-stack,
-.ticket-board {
-    display: grid;
-    gap: 10px;
-    margin-top: 28px;
-}
-
-.candidate-stack span,
-.ticket-board span {
-    display: flex;
-    align-items: center;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-radius: 6px;
-    color: var(--text);
-    background: rgba(255, 255, 255, 0.06);
-}
-
-.candidate-stack span::before,
-.ticket-board span::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    margin-right: 10px;
-    border-radius: 50%;
-    background: var(--cyan);
-    box-shadow: 0 0 18px rgba(52, 245, 212, 0.58);
-}
-
-.ticket-board {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.movie-visual {
-    border-color: rgba(255, 91, 200, 0.18);
-}
-
-.hire-visual {
-    border-color: rgba(141, 255, 122, 0.18);
-}
-
-.support-visual {
-    border-color: rgba(255, 189, 107, 0.18);
 }
 
 .project-body {
@@ -720,47 +662,6 @@ h3 {
 
 .project-actions .text-link {
     margin-top: 0;
-}
-
-.project-icon {
-    display: grid;
-    place-items: center;
-    min-height: 190px;
-    background:
-        linear-gradient(rgba(52, 245, 212, 0.10) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(52, 245, 212, 0.10) 1px, transparent 1px),
-        #0b1117;
-    background-size: 26px 26px;
-}
-
-.project-icon i {
-    font-size: 3.6rem;
-}
-
-.project-icon.warm i {
-    color: var(--amber);
-}
-
-.image-strip {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1px;
-    background: var(--line);
-}
-
-.image-strip.compact {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.image-strip button {
-    min-height: 270px;
-}
-
-.image-strip img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 220ms ease, filter 220ms ease;
 }
 
 .contact-grid {
@@ -933,6 +834,7 @@ h3 {
 
     .profile-grid,
     .stack-grid,
+    .services-grid,
     .contact-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -941,6 +843,11 @@ h3 {
     .project-card.wide {
         grid-column: span 1;
         grid-template-columns: 1fr;
+    }
+
+    .project-card.featured.reverse .project-visual,
+    .project-card.featured.reverse .project-body {
+        order: initial;
     }
 
     .project-grid {
@@ -977,6 +884,7 @@ h3 {
     .hero-metrics,
     .profile-grid,
     .stack-grid,
+    .services-grid,
     .contact-grid {
         grid-template-columns: 1fr;
     }
@@ -984,15 +892,6 @@ h3 {
     .section {
         width: min(100% - 32px, 1180px);
         padding: 72px 0;
-    }
-
-    .image-strip,
-    .image-strip.compact {
-        grid-template-columns: 1fr;
-    }
-
-    .image-strip button {
-        min-height: 210px;
     }
 
     .project-visual,
