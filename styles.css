@@ -207,6 +207,8 @@ button {
 
 .hero-portrait {
     position: relative;
+    display: grid;
+    gap: 12px;
     margin: 0;
     padding: 12px;
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -226,12 +228,67 @@ button {
     border-radius: 8px;
     background: linear-gradient(135deg, rgba(52, 245, 212, 0.62), rgba(255, 189, 107, 0.08), rgba(255, 91, 200, 0.34));
     opacity: 0.72;
+    pointer-events: none;
+}
+
+.spline-panel {
+    position: relative;
+    z-index: 2;
+    min-height: 360px;
+    overflow: hidden;
+    border: 1px solid rgba(52, 245, 212, 0.22);
+    border-radius: 6px;
+    background:
+        linear-gradient(rgba(52, 245, 212, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        rgba(4, 10, 17, 0.92);
+    background-size: 26px 26px;
+    box-shadow: 0 24px 90px rgba(52, 245, 212, 0.18);
+}
+
+.spline-panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+        linear-gradient(145deg, rgba(255, 255, 255, 0.13), transparent 32%),
+        radial-gradient(ellipse at 70% 10%, rgba(52, 245, 212, 0.18), transparent 52%);
+    pointer-events: none;
+}
+
+.spline-viewer,
+.spline-panel spline-viewer {
+    position: relative;
+    z-index: 2;
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 360px;
+}
+
+.spline-loader {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    display: grid;
+    place-items: center;
+    background: radial-gradient(ellipse at center, rgba(52, 245, 212, 0.10), transparent 58%);
+}
+
+.spline-loader span {
+    width: 38px;
+    height: 38px;
+    border: 2px solid rgba(255, 255, 255, 0.16);
+    border-top-color: var(--cyan);
+    border-radius: 50%;
+    animation: loaderSpin 1s linear infinite;
 }
 
 .portrait-frame {
     position: relative;
     z-index: 2;
-    aspect-ratio: 4 / 5;
+    aspect-ratio: 16 / 11;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 6px;
@@ -257,103 +314,6 @@ button {
     border: 1px solid rgba(255, 255, 255, 0.10);
     border-radius: 6px;
     background: rgba(7, 9, 13, 0.70);
-}
-
-.spline-scene {
-    position: absolute;
-    top: 16px;
-    right: -42px;
-    z-index: 1;
-    width: min(240px, 58%);
-    aspect-ratio: 1;
-    border: 1px solid rgba(52, 245, 212, 0.20);
-    border-radius: 8px;
-    background:
-        linear-gradient(rgba(52, 245, 212, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
-        rgba(4, 10, 17, 0.90);
-    background-size: 22px 22px;
-    box-shadow: 0 0 80px rgba(52, 245, 212, 0.16);
-    transform: perspective(680px) rotateY(-18deg) rotateX(9deg);
-    pointer-events: none;
-}
-
-.spline-scene::before {
-    content: "";
-    position: absolute;
-    inset: 10%;
-    background: radial-gradient(ellipse at center, rgba(52, 245, 212, 0.22), transparent 58%);
-    filter: blur(16px);
-}
-
-.scene-ring,
-.scene-node,
-.scene-core {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.scene-ring {
-    border: 1px solid rgba(52, 245, 212, 0.34);
-    border-radius: 50%;
-    box-shadow: inset 0 0 28px rgba(52, 245, 212, 0.08);
-}
-
-.scene-ring-one {
-    width: 72%;
-    height: 72%;
-    animation: sceneSpin 13s linear infinite;
-}
-
-.scene-ring-two {
-    width: 52%;
-    height: 52%;
-    border-color: rgba(255, 189, 107, 0.30);
-    transform: translate(-50%, -50%) rotateX(72deg);
-    animation: sceneSpinReverse 10s linear infinite;
-}
-
-.scene-ring-three {
-    width: 34%;
-    height: 34%;
-    border-color: rgba(255, 91, 200, 0.28);
-    animation: scenePulse 2.8s ease-in-out infinite;
-}
-
-.scene-node {
-    width: 10px;
-    height: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.48);
-    border-radius: 3px;
-    background: var(--cyan);
-    box-shadow: 0 0 22px rgba(52, 245, 212, 0.72);
-}
-
-.scene-node-one {
-    transform: translate(62px, -52px) rotate(14deg);
-}
-
-.scene-node-two {
-    background: var(--amber);
-    transform: translate(-64px, 36px) rotate(-18deg);
-    box-shadow: 0 0 20px rgba(255, 189, 107, 0.62);
-}
-
-.scene-node-three {
-    background: var(--pink);
-    transform: translate(38px, 66px) rotate(24deg);
-    box-shadow: 0 0 20px rgba(255, 91, 200, 0.54);
-}
-
-.scene-core {
-    width: 34px;
-    height: 34px;
-    border: 1px solid rgba(255, 255, 255, 0.34);
-    border-radius: 8px;
-    background: linear-gradient(135deg, var(--cyan), rgba(255, 255, 255, 0.16));
-    box-shadow: 0 0 34px rgba(52, 245, 212, 0.46);
 }
 
 .hero-portrait figcaption span {
@@ -887,36 +847,13 @@ h3 {
     transition: transform 180ms ease, border-color 180ms ease;
 }
 
-@keyframes sceneSpin {
+@keyframes loaderSpin {
     from {
-        transform: translate(-50%, -50%) rotate(0deg);
+        transform: rotate(0deg);
     }
 
     to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-@keyframes sceneSpinReverse {
-    from {
-        transform: translate(-50%, -50%) rotateX(72deg) rotate(0deg);
-    }
-
-    to {
-        transform: translate(-50%, -50%) rotateX(72deg) rotate(-360deg);
-    }
-}
-
-@keyframes scenePulse {
-    0%,
-    100% {
-        opacity: 0.62;
-        transform: translate(-50%, -50%) scale(0.96);
-    }
-
-    50% {
-        opacity: 1;
-        transform: translate(-50%, -50%) scale(1.06);
+        transform: rotate(360deg);
     }
 }
 
@@ -1079,10 +1016,10 @@ h3 {
         width: min(420px, 100%);
     }
 
-    .spline-scene {
-        right: -12px;
-        width: 190px;
-        opacity: 0.72;
+    .spline-panel,
+    .spline-viewer,
+    .spline-panel spline-viewer {
+        min-height: 300px;
     }
 
     .profile-grid,
@@ -1135,8 +1072,10 @@ h3 {
         font-size: 1rem;
     }
 
-    .spline-scene {
-        display: none;
+    .spline-panel,
+    .spline-viewer,
+    .spline-panel spline-viewer {
+        min-height: 260px;
     }
 
     .hero-metrics,

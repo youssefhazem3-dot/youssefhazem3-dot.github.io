@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.57/build/spline-viewer.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -72,14 +73,14 @@
                     </div>
 
                     <figure class="hero-portrait reveal">
-                        <div class="spline-scene" aria-hidden="true">
-                            <span class="scene-ring scene-ring-one"></span>
-                            <span class="scene-ring scene-ring-two"></span>
-                            <span class="scene-ring scene-ring-three"></span>
-                            <span class="scene-node scene-node-one"></span>
-                            <span class="scene-node scene-node-two"></span>
-                            <span class="scene-node scene-node-three"></span>
-                            <span class="scene-core"></span>
+                        <div class="spline-panel" aria-label="Interactive 3D AI robot scene">
+                            <div class="spline-loader" aria-hidden="true">
+                                <span></span>
+                            </div>
+                            <spline-viewer
+                                class="spline-viewer"
+                                url="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                            ></spline-viewer>
                         </div>
                         <div class="portrait-frame">
                             <img src="assets/profile.jpeg" alt="Portrait of Youssef Hazem Hanafi">
